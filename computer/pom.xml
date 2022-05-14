@@ -10,6 +10,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>computer</artifactId>
+    <dependencies>
+        <dependency>
+            <groupId>com.abiao</groupId>
+            <artifactId>collect</artifactId>
+        </dependency>
+    </dependencies>
 
 
 </project>
