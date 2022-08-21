@@ -1,10 +1,10 @@
-package com.abiao.trade;
+package com.abiao.data.trade;
 
-import com.abiao.data.DataInterface;
-import com.abiao.wallet.Wallet;
-import com.abiao.model.StockPrice;
-import com.abiao.model.TradeResult;
-import com.abiao.strategy.TradeStrategy;
+import com.abiao.data.data.DataInterface;
+import com.abiao.data.model.StockPrice;
+import com.abiao.data.strategy.TradeStrategy;
+import com.abiao.data.wallet.Wallet;
+import com.abiao.data.model.TradeResult;
 
 import java.util.Date;
 import java.util.List;

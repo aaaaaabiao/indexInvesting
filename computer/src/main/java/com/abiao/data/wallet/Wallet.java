@@ -1,4 +1,4 @@
-package com.abiao.wallet;
+package com.abiao.data.wallet;
 
 
 /**

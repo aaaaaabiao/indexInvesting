@@ -1,4 +1,4 @@
-package com.abiao.trade;
+package com.abiao.data.trade;
 
 /**
  * 交易抽象类、实现一些通用的方法

@@ -1,6 +1,6 @@
-package com.abiao.data;
+package com.abiao.data.data;
 
-import com.abiao.model.StockPrice;
+import com.abiao.data.model.StockPrice;
 
 import java.util.ArrayList;
 import java.util.Date;

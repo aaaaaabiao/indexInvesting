@@ -1,8 +1,8 @@
-package com.abiao.trade;
+package com.abiao.data.trade;
 
-import com.abiao.data.DataInterface;
-import com.abiao.wallet.Wallet;
-import com.abiao.strategy.TradeStrategy;
+import com.abiao.data.data.DataInterface;
+import com.abiao.data.strategy.TradeStrategy;
+import com.abiao.data.wallet.Wallet;
 
 /**
  * 交易接口

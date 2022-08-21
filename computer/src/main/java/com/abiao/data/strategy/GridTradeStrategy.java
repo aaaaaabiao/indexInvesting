@@ -1,8 +1,8 @@
-package com.abiao.strategy;
+package com.abiao.data.strategy;
 
-import com.abiao.wallet.Wallet;
-import com.abiao.model.StockPrice;
-import com.abiao.model.TradeResult;
+import com.abiao.data.model.StockPrice;
+import com.abiao.data.model.TradeResult;
+import com.abiao.data.wallet.Wallet;
 
 /**
  * 网格策略
