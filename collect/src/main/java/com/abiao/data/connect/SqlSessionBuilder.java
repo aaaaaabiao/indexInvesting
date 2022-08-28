@@ -9,18 +9,20 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class SqlSessionBuilder {
-    private static SqlSessionFactory sqlSessionFactory;
+
+    private static SqlSession sqlSession;
     static {
         String resource = "mybatis-config.xml";
         try {
             InputStream inputStream = Resources.getResourceAsStream(resource);
-            sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+            SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+            sqlSession = sqlSessionFactory.openSession();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public SqlSession build() {
-        return sqlSessionFactory.openSession();
+    public static SqlSession build() {
+        return sqlSession;
     }
 }

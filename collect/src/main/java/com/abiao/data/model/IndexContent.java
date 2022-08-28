@@ -11,18 +11,40 @@ import java.util.List;
  * */
 @Data
 public class IndexContent {
+
     /**
-     *
+     * 指数代码
      * */
     private String indexCode;
 
     /**
-     * 交易日
+     * 指数名称
      * */
-    private Date tradeDate;
+    private String indexName;
 
     /**
-     * 指数成分股
+     * 股票代码
      * */
-    private List<String> contentStock;
+    private String stockCode;
+
+
+    /**
+     * 加入时间
+     * */
+    private String inDate;
+
+
+    /**
+     * 退出时间
+     * */
+    private String outDate;
+
+
+    public IndexContent(String indexCode, String indexName, String stockCode, String inDate, String outDate) {
+        this.indexCode = indexCode;
+        this.indexName = indexName;
+        this.stockCode = stockCode;
+        this.inDate = inDate;
+        this.outDate = outDate;
+    }
 }
