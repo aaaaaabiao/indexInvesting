@@ -13,7 +13,7 @@
             <dataSource type="POOLED">
                 <property name="driver" value="org.sqlite.JDBC"/>
                 <property name="url"
-                          value="jdbc:sqlite:/Users/hubiao/bin/sqlite-tools-osx-x86-3390200/STOCK_DATA.db?date_string_format=yyyy-MM-dd"/>
+                          value="jdbc:sqlite:/Users/hubiao/Desktop/index.db?date_string_format=yyyy-MM-dd"/>
                 <property name="username" value=""/>
                 <property name="password" value="${password}"/>
             </dataSource>

@@ -17,7 +17,7 @@ import java.util.Arrays;
 import java.util.List;
 
 
-public class StockMapperTest {
+public class ListedCompanyMapperTest {
 
     String resource = "mybatis-config.xml";
     SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
@@ -32,8 +32,8 @@ public class StockMapperTest {
     SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
     SqlSession sqlSession = sqlSessionFactory.openSession();
     StockIndicatorsMapper stockIndicatorsMapper = sqlSession.getMapper(StockIndicatorsMapper.class);
-    IndexMapper indexMapper = sqlSession.getMapper(IndexMapper.class);
-    StockMapper stockMapper = sqlSession.getMapper(StockMapper.class);
+    IndexContentMapper indexContentMapper = sqlSession.getMapper(IndexContentMapper.class);
+    ListedCompanyMapper listedCompanyMapper = sqlSession.getMapper(ListedCompanyMapper.class);
 
 
     @Test
@@ -59,34 +59,13 @@ public class StockMapperTest {
     }
 
 
-    @Test
-    public void selectContentByIndexCodeAndDateTest() {
-        String indexCode = "sh000300";
-        String date = "2022-08-01";
-        List<String> codes = indexMapper.selectContentByIndexCodeAndDate(indexCode, date);
-        System.out.println(codes);
-    }
-
-
     /**
      * 获取所有股票代码
      * */
     @Test
     public void getAllStockCodeTest() {
-        List<String> codes = stockMapper.getAllStockCode();
+        List<String> codes = listedCompanyMapper.selectStockCode();
         System.out.println(codes.size());
     }
 
-
-    /**
-     * 插入指数成分信息
-     * */
-    @Test
-    public void insertIndexContent() throws ParseException {
-        IndexContent indexContent = new IndexContent("000300", "沪深300", "688599", "2021-12-13", null);
-        IndexContent indexContent1 = new IndexContent("000300", "沪深300", "688599", "2021-12-13", null);
-        indexMapper.insertIndexContext(indexContent);
-        indexMapper.insertIndexContext(indexContent1);
-        sqlSession.commit();
-    }
 }

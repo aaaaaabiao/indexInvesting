@@ -4,6 +4,9 @@ import java.util.List;
 
 public class AverageUtil {
 
+    /**
+     * 调和平均数
+     * */
     public static double harmonicMean(Double[] x) {
         int len = x.length;
         double sum = 0;

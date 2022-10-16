@@ -10,12 +10,46 @@
             <!--输出日志的格式-->
             <PatternLayout pattern="[%d{HH:mm:ss:SSS}] [%p] - %l - %m%n"/>
         </console>
+
+        <RollingFile name="FileInfoLog" fileName="log/info.log" append="true"
+                     filePattern="log/info-%d{yyyy-MM-dd}.log">
+            <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="[%d{HH:mm:ss:SSS}] [%p] - %l - %m%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+        </RollingFile>
+
+
+        <RollingFile name="FileWarnLog" fileName="log/warn.log" append="true"
+                     filePattern="log/info-%d{yyyy-MM-dd}.log">
+            <ThresholdFilter level="warn" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="[%d{HH:mm:ss:SSS}] [%p] - %l - %m%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+        </RollingFile>
+
+        <RollingFile name="FileErrorLog" fileName="log/error.log" append="true"
+                     filePattern="log/info-%d{yyyy-MM-dd}.log">
+            <ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="[%d{HH:mm:ss:SSS}] [%p] - %l - %m%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+        </RollingFile>
+
     </appenders>
+
+
     <!--然后定义logger，只有定义了logger并引入的appender，appender才会生效-->
     <loggers>
         <!--过滤掉spring和mybatis的一些无用的DEBUG信息-->
         <root level="info">
             <appender-ref ref="Console"/>
+            <appender-ref ref="FileInfoLog"/>
+            <appender-ref ref="FileWarnLog"/>
+            <appender-ref ref="FileErrorLog"/>
         </root>
     </loggers>
 </configuration>

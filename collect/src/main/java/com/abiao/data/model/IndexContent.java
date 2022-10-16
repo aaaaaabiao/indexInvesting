@@ -37,7 +37,13 @@ public class IndexContent {
     /**
      * 退出时间
      * */
-    private String outDate;
+    private String outDate = "";
+
+
+    /**
+     * 更新时间
+     * */
+    private long updateTime = System.currentTimeMillis();
 
 
     public IndexContent(String indexCode, String indexName, String stockCode, String inDate, String outDate) {

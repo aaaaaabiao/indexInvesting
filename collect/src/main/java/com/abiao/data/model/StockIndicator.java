@@ -1,9 +1,9 @@
 package com.abiao.data.model;
 
+
+
 import lombok.Data;
 import lombok.ToString;
-
-import java.sql.Date;
 
 
 /**
@@ -13,6 +13,8 @@ import java.sql.Date;
 @Data
 @ToString
 public class StockIndicator {
+
+
     /**
      * 股票代码
      * */
@@ -21,7 +23,7 @@ public class StockIndicator {
     /**
      * 交易日
      * */
-    private Date tradeDate;
+    private String tradeDate;
 
     /**
      * 市盈率
@@ -66,4 +68,7 @@ public class StockIndicator {
      * 总市值
      * */
     private Double totalMV;
+
+
+//    private Long updateTime = System.currentTimeMillis();
 }

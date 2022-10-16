@@ -1,10 +1,15 @@
 package com.abiao.data.valuation;
 
 import com.abiao.data.connect.SqlSessionBuilder;
-import com.abiao.data.dao.mapper.IndexMapper;
+import com.abiao.data.dao.IndexContentDao;
+import com.abiao.data.dao.ListedCompanyDao;
+import com.abiao.data.dao.StockIndicatorDao;
+import com.abiao.data.dao.mapper.IndexContentMapper;
 import com.abiao.data.dao.mapper.StockIndicatorsMapper;
+import com.abiao.data.model.ListedCompany;
 import com.abiao.data.model.StockIndicator;
 import com.abiao.data.util.AverageUtil;
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.time.DateUtils;
@@ -23,48 +28,86 @@ import java.util.stream.Collectors;
 
 @Slf4j
 public class IndexValuation {
-    private SqlSession sqlSession = new SqlSessionBuilder().build();
 
+    ListedCompanyDao listedCompanyDao = new ListedCompanyDao();
     /**
-     * 计算指数某天的估值
+     * 计算指数某天的估值(等全PE)
      * */
-    Double PEEqualWeight(String indexCode, String date) {
-        IndexMapper indexMapper = sqlSession.getMapper(IndexMapper.class);
-        StockIndicatorsMapper stockIndicatorsMapper = sqlSession.getMapper(StockIndicatorsMapper.class);
-        List<String> codes = indexMapper.selectContentByIndexCodeAndDate(indexCode, date);
-        List<StockIndicator> stockIndicators = stockIndicatorsMapper.selectByStockCodesAndDate(codes, date);
+//    Double PEEqualWeight(List<String> codes, String date) {
+//        StockIndicatorDao stockIndicatorDao = new StockIndicatorDao();
+//        List<StockIndicator> stockIndicators = stockIndicatorDao.selectByStockCodesAndDate(codes, date);
+//        if (stockIndicators.size() > 0) {
+//            List<Double> peTTMList = stockIndicators.stream()
+//                    .filter(item -> item.getPeTTM() != null)
+//                    .map(StockIndicator::getPeTTM)
+//                    .collect(Collectors.toList());
+//            double harmonicMeanPETTM = AverageUtil.harmonicMean(peTTMList);
+//            log.info("date:{}, stockNum:{}, peNum:{}, , pe:{}", date, codes.size(), peTTMList.size(),  harmonicMeanPETTM);
+//            return harmonicMeanPETTM;
+//        }else {
+//            return null;
+//        }
+//    }
+
+
+
+    Double equalWeight(List<String> codes, String date, String type) {
+        StockIndicatorDao stockIndicatorDao = new StockIndicatorDao();
+        List<StockIndicator> stockIndicators = stockIndicatorDao.selectByStockCodesAndDate(codes, date);
         if (stockIndicators.size() > 0) {
             List<Double> peTTMList = stockIndicators.stream()
-                    .filter(item -> item.getPeTTM() != null)
-                    .map(StockIndicator::getPeTTM)
+                    .filter(item -> {
+                        if ("pe".equals(type)) {
+                            return item.getPe() != null;
+                        }else if ("peTTM".equals(type)){
+                            return item.getPeTTM() != null;
+                        }else if ("pb".equals(type)) {
+                            return item.getPb() != null;
+                        }
+                        return item.getPeTTM() != null;
+                    })
+                    .map(item -> {
+                        if ("pe".equals(type)) {
+                            return item.getPe();
+                        }else if ("peTTM".equals(type)){
+                            return item.getPeTTM();
+                        }else if ("pb".equals(type)) {
+                            return item.getPb();
+                        }
+                        return item.getPeTTM();
+                    })
                     .collect(Collectors.toList());
-            List<String> peNullStockCode = stockIndicators.stream()
-                    .filter(item -> item.getPeTTM() == null)
-                    .map(StockIndicator::getStockCode)
-                    .collect(Collectors.toList());
-
-
             double harmonicMeanPETTM = AverageUtil.harmonicMean(peTTMList);
-            log.info("indexCode:{}, stockNum:{}, peNum:{}, date:{}, pe:{}", indexCode, codes.size(), peTTMList.size(), date, harmonicMeanPETTM);
-//            System.out.println(String.format("date:%s, pe:%s, indexCode:%s, stockNum:%s, peNum:%s, peNull:%s", date, harmonicMeanPETTM, indexCode, codes.size(), peTTMList.size(), peNullStockCode));
+            log.info("date:{}, type:{}, stockNum:{}, valuationNum:{}, , value:{}", date, type, codes.size(), peTTMList.size(),  harmonicMeanPETTM);
             return harmonicMeanPETTM;
         }else {
             return null;
         }
-
     }
 
 
+
+
+
+
+    List<String> marketAllCode(String date) {
+        List<ListedCompany> listedCompanies = listedCompanyDao.selectByDate(date);
+        return listedCompanies.stream().map(ListedCompany::getStockCode).collect(Collectors.toList());
+    }
+
     public static void main(String[] args) throws ParseException, IOException {
+        String type = "pb";
+        //全市场PE
         List<String> ret = new ArrayList<>();
-        String indexCode = "sh000300";
         IndexValuation indexValuation = new IndexValuation();
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        Date curDate = df.parse("2005-04-08");
-        Date endDate = df.parse("2022-06-30");
+        Date curDate = df.parse("2003-01-02");
+        Date endDate = df.parse("2022-09-30");
         Double prePE = 0.0;
         while (curDate.before(endDate)) {
-            Double pe = indexValuation.PEEqualWeight(indexCode, df.format(curDate));
+            String formatDate = df.format(curDate);
+            List<String> codes = indexValuation.marketAllCode(formatDate);
+            Double pe = indexValuation.equalWeight(codes, df.format(curDate), type);
             if (pe == null) {
                 pe = prePE;
             }
@@ -73,8 +116,6 @@ public class IndexValuation {
             curDate = DateUtils.addDays(curDate, 1);
 
         }
-//        log.info("ret:{}", ret);
         FileUtils.write(new File("/Users/hubiao/Desktop/valuation.csv"), String.join("\n", ret), Charset.defaultCharset());
-        System.out.println();
     }
 }
