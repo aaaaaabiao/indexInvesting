@@ -1,2 +1,0 @@
-[15:41:25:268] [INFO] - com.abiao.data.action.commit.DbCommitter.run(DbCommitter.java:37) - commit success! class:IndexValuation, count:34485
-[17:24:16:355] [INFO] - com.abiao.data.action.commit.DbCommitter.run(DbCommitter.java:37) - commit success! class:IndexValuation, count:34485
