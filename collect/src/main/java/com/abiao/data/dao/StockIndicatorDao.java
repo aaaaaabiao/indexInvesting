@@ -38,9 +38,17 @@ public class StockIndicatorDao implements CommonDao<StockIndicator>{
         return ret;
     }
 
+
+    public String selectLatestTradeDate() {
+        return stockIndicatorMapper.selectLatestTradeDate();
+    }
+
     @Override
     public void batchUpdate(List<StockIndicator> updates) {
         stockIndicatorMapper.batchInsertStockIndicator(updates);
         sqlSession.commit();
     }
+
+
+
 }

@@ -58,6 +58,7 @@ public class XueQiuKinePageProcess implements PageProcessor {
             stockIndicator.setPeTTM(((BigDecimal)info.get("pe")).doubleValue());
             stockIndicator.setPb(((BigDecimal)info.get("pb")).doubleValue());
             stockIndicator.setPsTTM(((BigDecimal)info.get("ps")).doubleValue());
+            //todo::总市值单位计算
             stockIndicator.setTotalMV(((BigDecimal)info.get("market_capital")).doubleValue());
             Long timestamp = (Long) info.get("timestamp");
             Date date = new Date(timestamp);

@@ -26,27 +26,25 @@ public class ListedCompany {
     /**
      * 所属行业
      * */
-    private String industry = "";
+    private String industry;
 
 
     /**
      * 上市时间
      * */
-    private String inMarketDate = "";
+    private String inMarketDate;
 
 
     /**
      * 退市时间
      * */
-    private String outMarketDate = "";
+    private String outMarketDate;
 
 
     /**
      * 创建时间
      * */
     private long updateTime = System.currentTimeMillis();
-
-
 
 
 }

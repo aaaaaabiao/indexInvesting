@@ -22,15 +22,21 @@ public class StockIndicatorCollect implements Collect<StockIndicator> {
 
     private String stockCode;
 
-    public StockIndicatorCollect(String stockCode) {
+    private Spider spider;
+
+    public StockIndicatorCollect(String stockCode, Spider spider) {
         this.stockCode = stockCode;
+        this.spider = spider;
     }
+
+
 
     @Override
     public List<StockIndicator> collect() {
         List<StockIndicator> ret = new ArrayList<>();
         try {
-            ret = akCollect();
+//            ret = akCollect();
+            throw new Exception("skip ak");
         } catch (Exception akEx) {
             log.error("get stock indicator info fail, stock_code:{}, akEx:{}", stockCode, akEx);
             try {
@@ -85,12 +91,10 @@ public class StockIndicatorCollect implements Collect<StockIndicator> {
     private List<StockIndicator> xueqiuCollect() {
 
         String xueqiuAPI = "https://stock.xueqiu.com/v5/stock/chart/kline.json?symbol=%s&begin=%s&period=day&type=before&count=-30&indicator=kline,pe,pb,ps,pcf,market_capital,agt,ggt,balance";
-        Spider spider = Spider.create(new XueQiuKinePageProcess());
         String request = String.format(xueqiuAPI, CommonUtil.getFullStockCode(stockCode) , System.currentTimeMillis());
         ResultItems resultItems = spider.get(request);
         List<StockIndicator> stockIndicators = resultItems.get("stockIndicators");
         stockIndicators.forEach(item -> item.setStockCode(stockCode));
-        spider.close();
         return stockIndicators;
     }
 

@@ -8,14 +8,40 @@ import lombok.Data;
 @Data
 public class IndexValuation {
 
-    String indexCode;
 
-    String tradeDate;
+    /**
+     * 自增ID
+     * */
+    private Integer id;
 
-    String pe;
+    /**
+     * 指数代码
+     * */
+    private String indexCode;
 
-    String peTTM;
 
-    String pb;
+    /**
+     * 交易日
+     * */
+    private String tradeDate;
+
+
+    /**
+     * 等全PE
+     * */
+    private Double peEw;
+
+
+    /**
+     * 等权PB
+     * */
+    private Double pbEw;
+
+
+    /**
+     * 更新时间
+     * */
+
+    private Long updateTime = System.currentTimeMillis();
 
 }

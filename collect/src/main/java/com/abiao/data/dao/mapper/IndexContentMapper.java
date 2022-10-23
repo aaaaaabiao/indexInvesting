@@ -20,6 +20,19 @@ public interface IndexContentMapper{
     List<IndexContent> selectIndexContentByCode(String stockCode);
 
 
+
+    /**
+     * 获取某个指数最早的时间
+     * */
+    @Select("select in_date from index_content where index_code=#{indexCode} order by in_date limit 1")
+    String selectIndexEarliestDateByIndexCode(String indexCode);
+
+    /**
+     * 获取某个指数的成分股(by特定时间)
+     * */
+    @Select("select * from index_content where index_code=#{indexCode} and in_date <= #{tradeDate} and (out_date > #{tradeDate} or out_date is null)")
+    List<IndexContent> selectIndexContentByIndexCodeAndTradeDate(@Param("indexCode")String indexCode, @Param("tradeDate")String tradeDate);
+
     /**
      * 插入指数成分股
      * */
@@ -30,6 +43,8 @@ public interface IndexContentMapper{
             + "</foreach>"
             + "</script>")
     void batchInsert(@Param("indexContents") List<IndexContent> indexContents);
+
+
 
 
 

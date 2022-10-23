@@ -33,6 +33,9 @@ public interface StockIndicatorsMapper {
     List<StockIndicator> selectByStockCodesAndDate(@Param("stockCodes") List<String> stockCodes, @Param("date") String date);
 
 
+    @Select("select trade_date from stock_indicator_daily order by trade_date desc limit 1")
+    String selectLatestTradeDate();
+
 
     /**
      * 插入指数成分股
@@ -44,4 +47,8 @@ public interface StockIndicatorsMapper {
             + "</foreach>"
             + "</script>")
     void batchInsertStockIndicator(@Param("stockIndicators") List<StockIndicator> stockIndicators);
+
+
+
+
 }

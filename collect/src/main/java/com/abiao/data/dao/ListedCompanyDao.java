@@ -3,10 +3,11 @@ package com.abiao.data.dao;
 import com.abiao.data.connect.SqlSessionBuilder;
 import com.abiao.data.dao.mapper.ListedCompanyMapper;
 import com.abiao.data.model.ListedCompany;
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.session.SqlSession;
 
+import java.util.Arrays;
 import java.util.List;
+
 
 public class ListedCompanyDao implements CommonDao<ListedCompany>{
     SqlSession sqlSession = SqlSessionBuilder.build();
@@ -44,5 +45,15 @@ public class ListedCompanyDao implements CommonDao<ListedCompany>{
     public void batchUpdate(List<ListedCompany> updates) {
         listedCompanyMapper.batchInsert(updates);
         sqlSession.commit();
+    }
+
+    public static void main(String[] args) {
+        ListedCompanyDao dao = new ListedCompanyDao();
+        ListedCompany company = new ListedCompany();
+        company.setStockCode("test");
+        company.setStockName("test");
+        company.setInMarketDate("test");
+        dao.batchUpdate(Arrays.asList(company));
+
     }
 }

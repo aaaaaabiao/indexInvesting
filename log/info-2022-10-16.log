@@ -1,0 +1,61 @@
+[18:14:20:951] [ERROR] - com.abiao.data.collect.StockIndicatorCollect.collect(StockIndicatorCollect.java:39) - get stock indicator info fail, stock_code:000971, akEx:org.apache.hc.client5.http.HttpResponseException: status code: 500, reason phrase: Internal Server Error, xqEx:java.lang.NullPointerException
+[18:15:04:878] [ERROR] - com.abiao.data.collect.StockIndicatorCollect.collect(StockIndicatorCollect.java:39) - get stock indicator info fail, stock_code:000971, akEx:org.apache.hc.client5.http.HttpResponseException: status code: 500, reason phrase: Internal Server Error, xqEx:java.lang.NullPointerException
+[18:15:20:399] [ERROR] - com.abiao.data.collect.StockIndicatorCollect.collect(StockIndicatorCollect.java:39) - get stock indicator info fail, stock_code:000970, akEx:org.apache.hc.client5.http.HttpResponseException: status code: 500, reason phrase: Internal Server Error, xqEx:java.lang.NullPointerException
+[18:18:34:981] [ERROR] - com.abiao.data.collect.StockIndicatorCollect.collect(StockIndicatorCollect.java:39) - get stock indicator info fail, stock_code:000971, akEx:org.apache.hc.client5.http.HttpResponseException: status code: 500, reason phrase: Internal Server Error, xqEx:java.lang.NullPointerException
+[18:18:38:365] [ERROR] - com.abiao.data.collect.StockIndicatorCollect.collect(StockIndicatorCollect.java:39) - get stock indicator info fail, stock_code:000970, akEx:org.apache.hc.client5.http.HttpResponseException: status code: 500, reason phrase: Internal Server Error, xqEx:java.lang.NullPointerException
+[19:08:52:428] [ERROR] - com.abiao.data.collect.StockIndicatorCollect.collect(StockIndicatorCollect.java:39) - get stock indicator info fail, stock_code:000971, akEx:org.apache.hc.client5.http.HttpResponseException: status code: 500, reason phrase: Internal Server Error, xqEx:java.lang.NullPointerException
+[19:38:25:196] [ERROR] - com.abiao.data.collect.StockIndicatorCollect.collect(StockIndicatorCollect.java:39) - get stock indicator info fail, stock_code:000971, akEx:org.apache.hc.client5.http.HttpResponseException: status code: 500, reason phrase: Internal Server Error, xqEx:java.lang.NullPointerException
+[19:44:43:838] [ERROR] - com.abiao.data.collect.StockIndicatorCollect.collect(StockIndicatorCollect.java:39) - get stock indicator info fail, stock_code:000971, akEx:org.apache.hc.client5.http.HttpResponseException: status code: 500, reason phrase: Internal Server Error, xqEx:java.lang.NullPointerException
+[19:46:33:351] [ERROR] - us.codecraft.webmagic.Spider$1.run(Spider.java:324) - process request Request{url='https://stock.xueqiu.com/v5/stock/chart/kline.json?symbol=SZ000971&begin=1665920783420&period=day&type=before&count=-10&indicator=kline,pe,pb,ps,pcf,market_capital,agt,ggt,balance', method='null', extras=null, priority=0, headers={}, cookies={}} error
+java.lang.ClassCastException: java.math.BigDecimal cannot be cast to java.lang.Double
+	at com.abiao.data.collect.spider.XueQiuKinePageProcess.lambda$process$0(XueQiuKinePageProcess.java:56) ~[classes/:?]
+	at java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:193) ~[?:1.8.0_221]
+	at java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1382) ~[?:1.8.0_221]
+	at java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:482) ~[?:1.8.0_221]
+	at java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:472) ~[?:1.8.0_221]
+	at java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:708) ~[?:1.8.0_221]
+	at java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234) ~[?:1.8.0_221]
+	at java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:499) ~[?:1.8.0_221]
+	at com.abiao.data.collect.spider.XueQiuKinePageProcess.process(XueQiuKinePageProcess.java:64) ~[classes/:?]
+	at us.codecraft.webmagic.Spider.onDownloadSuccess(Spider.java:414) ~[webmagic-core-0.7.3.jar:?]
+	at us.codecraft.webmagic.Spider.processRequest(Spider.java:406) ~[webmagic-core-0.7.3.jar:?]
+	at us.codecraft.webmagic.Spider.access$000(Spider.java:61) ~[webmagic-core-0.7.3.jar:?]
+	at us.codecraft.webmagic.Spider$1.run(Spider.java:320) [webmagic-core-0.7.3.jar:?]
+	at us.codecraft.webmagic.thread.CountableThreadPool$1.run(CountableThreadPool.java:74) [webmagic-core-0.7.3.jar:?]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149) [?:1.8.0_221]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624) [?:1.8.0_221]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_221]
+[19:46:33:359] [ERROR] - com.abiao.data.collect.StockIndicatorCollect.collect(StockIndicatorCollect.java:39) - get stock indicator info fail, stock_code:000971, akEx:org.apache.hc.client5.http.HttpResponseException: status code: 500, reason phrase: Internal Server Error, xqEx:java.lang.NullPointerException
+[19:46:44:460] [ERROR] - com.abiao.data.collect.StockIndicatorCollect.collect(StockIndicatorCollect.java:39) - get stock indicator info fail, stock_code:000971, akEx:org.apache.hc.client5.http.HttpResponseException: status code: 500, reason phrase: Internal Server Error, xqEx:java.lang.NullPointerException
+[19:48:03:492] [ERROR] - us.codecraft.webmagic.Spider$1.run(Spider.java:324) - process request Request{url='https://stock.xueqiu.com/v5/stock/chart/kline.json?symbol=SZ000971&begin=1665920837414&period=day&type=before&count=-10&indicator=kline,pe,pb,ps,pcf,market_capital,agt,ggt,balance', method='null', extras=null, priority=0, headers={}, cookies={}} error
+java.lang.ClassCastException: java.math.BigDecimal cannot be cast to java.lang.Double
+	at com.abiao.data.collect.spider.XueQiuKinePageProcess.lambda$process$0(XueQiuKinePageProcess.java:56) ~[classes/:?]
+	at java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:193) ~[?:1.8.0_221]
+	at java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1382) ~[?:1.8.0_221]
+	at java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:482) ~[?:1.8.0_221]
+	at java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:472) ~[?:1.8.0_221]
+	at java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:708) ~[?:1.8.0_221]
+	at java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234) ~[?:1.8.0_221]
+	at java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:499) ~[?:1.8.0_221]
+	at com.abiao.data.collect.spider.XueQiuKinePageProcess.process(XueQiuKinePageProcess.java:64) ~[classes/:?]
+	at us.codecraft.webmagic.Spider.onDownloadSuccess(Spider.java:414) ~[webmagic-core-0.7.3.jar:?]
+	at us.codecraft.webmagic.Spider.processRequest(Spider.java:406) ~[webmagic-core-0.7.3.jar:?]
+	at us.codecraft.webmagic.Spider.access$000(Spider.java:61) ~[webmagic-core-0.7.3.jar:?]
+	at us.codecraft.webmagic.Spider$1.run(Spider.java:320) [webmagic-core-0.7.3.jar:?]
+	at us.codecraft.webmagic.thread.CountableThreadPool$1.run(CountableThreadPool.java:74) [webmagic-core-0.7.3.jar:?]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149) [?:1.8.0_221]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624) [?:1.8.0_221]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_221]
+[19:48:03:502] [ERROR] - com.abiao.data.collect.StockIndicatorCollect.collect(StockIndicatorCollect.java:39) - get stock indicator info fail, stock_code:000971, akEx:org.apache.hc.client5.http.HttpResponseException: status code: 500, reason phrase: Internal Server Error, xqEx:java.lang.NullPointerException
+[19:57:52:032] [ERROR] - com.abiao.data.collect.StockIndicatorCollect.collect(StockIndicatorCollect.java:35) - get stock indicator info fail, stock_code:000971, akEx:org.apache.hc.client5.http.HttpResponseException: status code: 500, reason phrase: Internal Server Error
+[19:57:53:573] [ERROR] - com.abiao.data.collect.StockIndicatorCollect.collect(StockIndicatorCollect.java:35) - get stock indicator info fail, stock_code:000970, akEx:org.apache.hc.client5.http.HttpResponseException: status code: 500, reason phrase: Internal Server Error
+[19:57:54:840] [ERROR] - com.abiao.data.collect.StockIndicatorCollect.collect(StockIndicatorCollect.java:35) - get stock indicator info fail, stock_code:000975, akEx:org.apache.hc.client5.http.HttpResponseException: status code: 500, reason phrase: Internal Server Error
+[19:57:56:316] [ERROR] - com.abiao.data.collect.StockIndicatorCollect.collect(StockIndicatorCollect.java:35) - get stock indicator info fail, stock_code:000973, akEx:org.apache.hc.client5.http.HttpResponseException: status code: 500, reason phrase: Internal Server Error
+[19:57:57:798] [ERROR] - com.abiao.data.collect.StockIndicatorCollect.collect(StockIndicatorCollect.java:35) - get stock indicator info fail, stock_code:000972, akEx:org.apache.hc.client5.http.HttpResponseException: status code: 500, reason phrase: Internal Server Error
+[19:57:59:054] [ERROR] - com.abiao.data.collect.StockIndicatorCollect.collect(StockIndicatorCollect.java:35) - get stock indicator info fail, stock_code:000978, akEx:org.apache.hc.client5.http.HttpResponseException: status code: 500, reason phrase: Internal Server Error
+[19:58:00:286] [ERROR] - com.abiao.data.collect.StockIndicatorCollect.collect(StockIndicatorCollect.java:35) - get stock indicator info fail, stock_code:000977, akEx:org.apache.hc.client5.http.HttpResponseException: status code: 500, reason phrase: Internal Server Error
+[19:58:01:576] [ERROR] - com.abiao.data.collect.StockIndicatorCollect.collect(StockIndicatorCollect.java:35) - get stock indicator info fail, stock_code:000976, akEx:org.apache.hc.client5.http.HttpResponseException: status code: 500, reason phrase: Internal Server Error
+[19:58:02:853] [ERROR] - com.abiao.data.collect.StockIndicatorCollect.collect(StockIndicatorCollect.java:35) - get stock indicator info fail, stock_code:688728, akEx:org.apache.hc.client5.http.HttpResponseException: status code: 500, reason phrase: Internal Server Error
+[19:58:04:111] [ERROR] - com.abiao.data.collect.StockIndicatorCollect.collect(StockIndicatorCollect.java:35) - get stock indicator info fail, stock_code:688722, akEx:org.apache.hc.client5.http.HttpResponseException: status code: 500, reason phrase: Internal Server Error
+[19:58:05:306] [ERROR] - com.abiao.data.collect.StockIndicatorCollect.collect(StockIndicatorCollect.java:35) - get stock indicator info fail, stock_code:605555, akEx:org.apache.hc.client5.http.HttpResponseException: status code: 500, reason phrase: Internal Server Error
+[19:58:06:503] [ERROR] - com.abiao.data.collect.StockIndicatorCollect.collect(StockIndicatorCollect.java:35) - get stock indicator info fail, stock_code:601198, akEx:org.apache.hc.client5.http.HttpResponseException: status code: 500, reason phrase: Internal Server Error
