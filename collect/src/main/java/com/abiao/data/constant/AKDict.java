@@ -15,9 +15,11 @@ public class AKDict {
     //暂停/终止上市-上证
     public static String sseDelisting = "stock_info_sh_delist";
 
-
     //终止(暂停)上市-深证
     public static String szseDelisting = "stock_info_sz_delist";
+
+    //指数历史行情数据,http://127.0.0.1:8080/api/public/index_zh_a_hist?symbol=000990&period=daily
+    public static String indexZhAHist = "index_zh_a_hist";
 
 
 

@@ -50,16 +50,11 @@ public class StockIndicatorAutoUpdateAction extends AutoUpdateAction<StockIndica
         return updateValue;
     }
 
-
     @Override
-    protected void commit(List<StockIndicator> commit) {
-        String commitSerialization = JSON.toJSONString(commit);
-        try {
-            FileUtils.write(new File(commitFilePath), commitSerialization + "\n", true);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    protected String commitPath() {
+        return commitFilePath;
     }
+
 
     public static void main(String[] args) {
         String commitPath = args[0];

@@ -38,17 +38,12 @@ public class ListedCompanyAutoUpdateAction extends AutoUpdateAction<ListedCompan
     }
 
     @Override
-    protected void commit(List<ListedCompany> commit) {
-        String commitSerialization = JSON.toJSONString(commit);
-        try {
-            FileUtils.write(new File(commitPath), commitSerialization + "\n", true);
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        }
+    protected String commitPath() {
+        return commitPath;
     }
 
-    public static void main(String[] args) {
+
+    public static void main(String[] args) throws IOException {
         String commitPath = args[0];
 
         Collect<ListedCompany> companyCollect = new ListedCompanyCollect();

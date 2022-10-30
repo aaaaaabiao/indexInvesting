@@ -2,10 +2,7 @@ package com.abiao.data.action.commit;
 
 import com.abiao.data.constant.Constant;
 import com.abiao.data.dao.*;
-import com.abiao.data.model.IndexContent;
-import com.abiao.data.model.IndexValuation;
-import com.abiao.data.model.ListedCompany;
-import com.abiao.data.model.StockIndicator;
+import com.abiao.data.model.*;
 import lombok.extern.slf4j.Slf4j;
 
 
@@ -55,6 +52,18 @@ public class CommitterFactory {
         }
     }
 
+
+
+    static class IndexDailyDataCommitter extends DbCommitter<IndexDailyData> {
+        public IndexDailyDataCommitter(String commitFilePath, CommonDao<IndexDailyData> dao) {
+            super(commitFilePath, dao);
+        }
+        @Override
+        protected Class<IndexDailyData> getCls() {
+            return IndexDailyData.class;
+        }
+    }
+
     public Committer getCommitter(String source, String input) {
 
         Committer committer = null;
@@ -71,6 +80,9 @@ public class CommitterFactory {
                 break;
             case Constant.indexValuation:
                 committer = new IndexValuationCommitter(input, new IndexValuationDao());
+                break;
+            case Constant.indexDailyData:
+                committer = new IndexDailyDataCommitter(input, new IndexDailyDataDao());
                 break;
             default:
                 log.error("error source:{}", source);

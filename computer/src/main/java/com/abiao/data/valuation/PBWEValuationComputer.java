@@ -18,7 +18,7 @@ public class PBWEValuationComputer implements ValuationComputer {
     public IndexValuation compute(List<StockIndicator> stockIndicators) {
         IndexValuation indexValuation = new IndexValuation();
 
-
+        //todo::新数据pe计算fix
         List<Double> peTTMList = stockIndicators.stream()
                 .filter(item -> item.getPb() != null)
                 .map(item -> item.getPb())

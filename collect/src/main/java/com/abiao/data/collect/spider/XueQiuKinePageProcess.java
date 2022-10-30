@@ -27,7 +27,7 @@ public class XueQiuKinePageProcess implements PageProcessor {
 
     private Site site = Site.me().setRetrySleepTime(3).setSleepTime(1000).setTimeOut(10000)
             .addHeader("user-agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36")
-            .addHeader("cookie", "device_id=0667a293ccc5e4278186e6537c064958; Hm_lvt_1db88642e346389874251b5a1eded6e3=1664696087; xq_a_token=dd874a8d08edaeb9cdc493d9239c447738426b96; xqat=dd874a8d08edaeb9cdc493d9239c447738426b96; xq_r_token=7a97f1ad16a7e6074c744f820621875ef03d3f3d; xq_id_token=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1aWQiOi0xLCJpc3MiOiJ1YyIsImV4cCI6MTY2ODI5ODQ3NywiY3RtIjoxNjY1ODMxOTYzMjU0LCJjaWQiOiJkOWQwbjRBWnVwIn0.RZH26cpd-zM-hksNid5o0MrmxvIADkbZ__yRmkz5nb8_ii5FfJdGPQ9D_z-6Dq3G3SqlKPI1KU4VIIHQTs1Dnyt5H7LCMyaMIzTraJsy5B5swAFDNTVtewBb9RE1TpCU61klThStSCp607RxkiXB8qahtufIRFaMxgub5j9ouDq5MFVdqHk1UGdLg5aY-tYaD1XUKo6TupA4WEeEqvep1fL3MFfmGgETFG_DGs_Hxy9JgeFvUF6daXWfZx-N_1ioSmOIhf6ACASAWkFfV4tKRU8t38dU3pJnHIDYNoHpoJQrjz84aJh0n36CtIXx1Q772MACZQ9_nQi0BFujag2w4g; u=851665831995554; s=dc1548rf55; Hm_lpvt_1db88642e346389874251b5a1eded6e3=1665912587");;
+            .addHeader("cookie", "device_id=0667a293ccc5e4278186e6537c064958; s=dc1548rf55; Hm_lvt_1db88642e346389874251b5a1eded6e3=1664696087,1666422891; xq_a_token=ae5fc472c3ac4a0910f1d64f4c84e313e3c62d82; xqat=ae5fc472c3ac4a0910f1d64f4c84e313e3c62d82; xq_r_token=126b64f24abcc1b2d0b168de6cfeecdd2220d891; xq_id_token=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1aWQiOi0xLCJpc3MiOiJ1YyIsImV4cCI6MTY2OTU5NDUxMywiY3RtIjoxNjY3MDMxOTMyMzA1LCJjaWQiOiJkOWQwbjRBWnVwIn0.l2yB4lVfvFhGZxJ4GZWyV5G_isY2dP1geDeLK8eqP4SVoWXAZKtJ5_-Z_pRiA_Hg_YJk8efFbcXoeURaNh5a4TcxYlA5MNEYPdS1HX9Fxhx4wTfcgFwiTodgoOLYKAxlvaEDQBOGQrztQ4efCQi9qCpWzOMyp8GLmcTaJmJBnd3WURrYNdKSLnnaADYoiTLVuNN7c3_UtXvOWM5PryhdwEkgLxXeY1Cyo7OI7ByfcgJt_24Nup3zpnvE1R3XVZQAihQHAh25e76iGlIWq1_bA-sWQCTMdOCMy1xSHLjuaNGZdBkhvpEYlB3rEDjxL16NoiuLwTIPXfBWQkMCaRwbbQ; u=611667031990425; Hm_lpvt_1db88642e346389874251b5a1eded6e3=1667031994");
 
     @Override
     public void process(Page page) {
@@ -58,8 +58,7 @@ public class XueQiuKinePageProcess implements PageProcessor {
             stockIndicator.setPeTTM(((BigDecimal)info.get("pe")).doubleValue());
             stockIndicator.setPb(((BigDecimal)info.get("pb")).doubleValue());
             stockIndicator.setPsTTM(((BigDecimal)info.get("ps")).doubleValue());
-            //todo::总市值单位计算
-            stockIndicator.setTotalMV(((BigDecimal)info.get("market_capital")).doubleValue());
+            stockIndicator.setTotalMV(((BigDecimal)info.get("market_capital")).doubleValue() / 10000);
             Long timestamp = (Long) info.get("timestamp");
             Date date = new Date(timestamp);
             stockIndicator.setTradeDate(sdf.format(date));

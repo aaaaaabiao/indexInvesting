@@ -1,12 +1,6 @@
 package com.abiao.data.valuation;
-import com.abiao.data.dao.IndexContentDao;
-import com.abiao.data.dao.IndexValuationDao;
-import com.abiao.data.dao.ListedCompanyDao;
-import com.abiao.data.dao.StockIndicatorDao;
-import com.abiao.data.model.IndexContent;
-import com.abiao.data.model.IndexValuation;
-import com.abiao.data.model.ListedCompany;
-import com.abiao.data.model.StockIndicator;
+import com.abiao.data.dao.*;
+import com.abiao.data.model.*;
 import com.alibaba.fastjson.JSON;
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
@@ -126,16 +120,18 @@ public class IndexValuationAction {
     }
 
     public static void main(String[] args) throws ParseException {
-        String[] indexCodes = new String[]{"000300", "000905", "000827", "399971", "000990", "000991", "000015", "000993"};
+
+        FollowIndexDao followIndexDao = new FollowIndexDao();
         ListedCompanyDao listedCompanyDao = new ListedCompanyDao();
         StockIndicatorDao stockIndicatorDao = new StockIndicatorDao();
         IndexValuationDao indexValuationDao = new IndexValuationDao();
         IndexContentDao indexContentDao = new IndexContentDao();
         ValuationComputer computer = new PEWEValuationComputer();
 
+        List<FollowIndex> followIndices = followIndexDao.selectAll();
 
-        for (String indexCode : indexCodes) {
-            IndexValuationAction indexValuationAction = new IndexValuationAction(indexCode,
+        for (FollowIndex followIndex : followIndices) {
+            IndexValuationAction indexValuationAction = new IndexValuationAction(followIndex.getIndexCode(),
                     listedCompanyDao, stockIndicatorDao, indexValuationDao,indexContentDao, computer);
             JCommander.newBuilder()
                     .addObject(indexValuationAction)

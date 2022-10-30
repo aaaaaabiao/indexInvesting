@@ -29,13 +29,17 @@ public abstract class DbCommitter<T> implements Committer {
     public void run() {
         try {
             List<String> lines = FileUtils.readLines(new File(commitFilePath), Charset.defaultCharset());
-            List<T> commit = new ArrayList<>();
-            int count = 0;
+            List<T> allCommit = new ArrayList<>();
             for (String line : lines) {
-                commit.addAll(JSON.parseArray(line, getCls()));
+                allCommit.addAll(JSON.parseArray(line, getCls()));
+            }
+            if (allCommit.size() == 0) return;
+            int count = 0;
+            List<T> commit = new ArrayList<>();
+            for (T data : allCommit) {
+                commit.add(data);
                 count++;
-                //todo::分批commit
-                if (count == 1000) {
+                if (count == 10000) {
                     dao.batchUpdate(commit);
                     log.info("commit success! class:{}, count:{}", getCls().getSimpleName(), commit.size());
                     count = 0;

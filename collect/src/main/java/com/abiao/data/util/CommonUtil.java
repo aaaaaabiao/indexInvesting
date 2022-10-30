@@ -2,6 +2,7 @@ package com.abiao.data.util;
 
 import com.abiao.data.constant.Constant;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,7 +29,11 @@ public class CommonUtil {
         }else if (stockCode.startsWith("4")) {
             return "BJ" + stockCode;
         }
-
         return "";
+    }
+
+
+    public static Double bigDecimalToDouble(Object value) {
+        return ((BigDecimal) value).doubleValue();
     }
 }

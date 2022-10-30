@@ -58,29 +58,22 @@ public class IndexContentAutoUpdateAction extends AutoUpdateAction<IndexContent>
         return updateValue;
     }
 
-
-    public List<ListedCompany> fix() {
-        ListedCompanyDao listedCompanyDao = new ListedCompanyDao();
-        List<ListedCompany> listedCompanies = new ArrayList<>();
-        String[] codes = new String[]{"689009"};
-        for (String code : codes) {
-            listedCompanies.add(listedCompanyDao.selectByUniqueKey(code));
-        }
-        return listedCompanies;
-    }
-
-
     @Override
-    protected void commit(List<IndexContent> commit) {
-        String commitSerialization = JSON.toJSONString(commit);
-        String commitFilePath = ThreadLocalUtil.commitDataPath.get().get(Constant.indexContent).get("data");
-        try {
-            FileUtils.write(new File(commitFilePath), commitSerialization + "\n", true);
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        }
+    protected String commitPath() {
+        return commitPath;
     }
+
+
+//    public List<ListedCompany> fix() {
+//        ListedCompanyDao listedCompanyDao = new ListedCompanyDao();
+//        List<ListedCompany> listedCompanies = new ArrayList<>();
+//        String[] codes = new String[]{"689009"};
+//        for (String code : codes) {
+//            listedCompanies.add(listedCompanyDao.selectByUniqueKey(code));
+//        }
+//        return listedCompanies;
+//    }
+
 
     public static void main(String[] args) throws IOException {
 

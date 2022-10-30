@@ -20,7 +20,7 @@ public class PEWEValuationComputer implements ValuationComputer {
 
 
         List<Double> peTTMList = stockIndicators.stream()
-                .filter(item -> item.getPeTTM() != null)
+                .filter(item -> item.getPeTTM() != null && item.getPeTTM() > 0)
                 .map(item -> item.getPeTTM())
                 .collect(Collectors.toList());
         double harmonicMeanPETTM = AverageUtil.harmonicMean(peTTMList);
