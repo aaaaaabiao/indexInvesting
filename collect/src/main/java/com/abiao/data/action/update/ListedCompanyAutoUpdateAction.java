@@ -46,8 +46,9 @@ public class ListedCompanyAutoUpdateAction extends AutoUpdateAction<ListedCompan
     public static void main(String[] args) throws IOException {
         String commitPath = args[0];
 
-        Collect<ListedCompany> companyCollect = new ListedCompanyCollect();
         DbOp<ListedCompany> dbOp = new ListedCompanyDbOp();
+        Collect<ListedCompany> companyCollect = new ListedCompanyCollect();
+
         new ListedCompanyAutoUpdateAction(companyCollect, dbOp, commitPath).action();
     }
 }

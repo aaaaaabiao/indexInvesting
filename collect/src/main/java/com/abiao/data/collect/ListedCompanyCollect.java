@@ -1,6 +1,9 @@
 package com.abiao.data.collect;
 
+import com.abiao.data.action.db.DbOp;
+import com.abiao.data.action.db.ListedCompanyDbOp;
 import com.abiao.data.constant.AKDict;
+import com.abiao.data.dao.ListedCompanyDao;
 import com.abiao.data.model.ListedCompany;
 import com.abiao.data.model.StockIndicator;
 import com.abiao.data.util.AKUtil;
@@ -31,44 +34,57 @@ import java.util.stream.Collectors;
 public class ListedCompanyCollect implements Collect<ListedCompany> {
 
 
+//    private DbOp<ListedCompany> dbOp;
+//
+//    public ListedCompanyCollect(DbOp<ListedCompany> dbOp) {
+//        this.dbOp = dbOp;
+//    }
 
     @Override
     public List<ListedCompany> collect() {
         List<ListedCompany> listedCompanies = new ArrayList<>();
         try {
             List<Map<String, Object>> stockList = AKUtil.get(AKDict.stockInfoACodeName, null);
-            for (Map<String, Object> stockMap : stockList) {
-                String code = stockMap.get("code") + "";
-                String name = stockMap.get("name") + "";
-                Map<String, Object> params = new HashMap<>();
-                params.put("symbol", code);
-                List<Map<String, Object>> stockInfo = AKUtil.get(AKDict.stockIndividualInfo, params);
-                String industry = null;
-                Date inMarket = null;
-                for (Map<String, Object> info : stockInfo) {
-                    String item = info.get("item") + "";
-                    String value = info.get("value") + "";
-                    switch (item) {
-                        case "行业":
-                            industry = value;
-                            break;
-                        case "上市时间":
-                            inMarket = DateUtils.parseDate(value, "yyyyMMdd");
-                            break;
-                        default:
 
+            //先diff,然后再更新
+            DbOp<ListedCompany> dbOp = new ListedCompanyDbOp();
+            Set<String> curListedCompany = dbOp.select().stream().map(ListedCompany::getStockCode).collect(Collectors.toSet());
+            Set<String> latestListedCompany = stockList.stream().map(item -> item.get("code") + "").collect(Collectors.toSet());
+            Set<String> diff = latestListedCompany.stream().filter(item -> !curListedCompany.contains(item)).collect(Collectors.toSet());
+
+            if (diff.size() > 0) {
+                for (Map<String, Object> stockMap : stockList) {
+                    String code = stockMap.get("code") + "";
+                    String name = stockMap.get("name") + "";
+                    Map<String, Object> params = new HashMap<>();
+                    params.put("symbol", code);
+                    List<Map<String, Object>> stockInfo = AKUtil.get(AKDict.stockIndividualInfo, params);
+                    String industry = null;
+                    Date inMarket = null;
+                    for (Map<String, Object> info : stockInfo) {
+                        String item = info.get("item") + "";
+                        String value = info.get("value") + "";
+                        switch (item) {
+                            case "行业":
+                                industry = value;
+                                break;
+                            case "上市时间":
+                                inMarket = DateUtils.parseDate(value, "yyyyMMdd");
+                                break;
+                            default:
+
+                        }
                     }
+                    ListedCompany listedCompany = new ListedCompany();
+                    listedCompany.setStockCode(code);
+                    listedCompany.setStockName(name);
+                    listedCompany.setIndustry(industry);
+                    listedCompany.setInMarketDate(DateFormatUtils.format(inMarket, "yyyy-MM-dd"));
+                    listedCompanies.add(listedCompany);
                 }
-                ListedCompany listedCompany = new ListedCompany();
-                listedCompany.setStockCode(code);
-                listedCompany.setStockName(name);
-                listedCompany.setIndustry(industry);
-                listedCompany.setInMarketDate(DateFormatUtils.format(inMarket, "yyyy-MM-dd"));
-                listedCompanies.add(listedCompany);
             }
 
             //收集上交所和深交所退市的股票
-
             List<ListedCompany> szseDelisting = distinct(szseDelisting());
             List<ListedCompany> sseDelisting = distinct(sseDelisting());
             listedCompanies.addAll(szseDelisting);

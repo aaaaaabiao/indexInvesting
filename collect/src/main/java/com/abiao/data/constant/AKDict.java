@@ -3,7 +3,7 @@ package com.abiao.data.constant;
 public class AKDict {
 
 
-    //A故所有股票代码和名称,http://127.0.0.1:8080/api/public/stock_info_a_code_name
+    //A股所有股票代码和名称,http://127.0.0.1:8080/api/public/stock_info_a_code_name
     public static String stockInfoACodeName = "stock_info_a_code_name";
 
     //A股个股基本信息,http://127.0.0.1:8080/api/public/stock_individual_info_em?symbol=000001

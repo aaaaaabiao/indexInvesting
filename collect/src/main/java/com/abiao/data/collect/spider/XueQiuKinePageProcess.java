@@ -6,8 +6,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
 import lombok.extern.slf4j.Slf4j;
-import us.codecraft.webmagic.Page;
-import us.codecraft.webmagic.Site;
+import us.codecraft.webmagic.*;
 import us.codecraft.webmagic.processor.PageProcessor;
 
 
@@ -26,11 +25,18 @@ public class XueQiuKinePageProcess implements PageProcessor {
     private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
     private Site site = Site.me().setRetrySleepTime(3).setSleepTime(1000).setTimeOut(10000)
-            .addHeader("user-agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36")
-            .addHeader("cookie", "device_id=0667a293ccc5e4278186e6537c064958; s=dc1548rf55; Hm_lvt_1db88642e346389874251b5a1eded6e3=1664696087,1666422891; xq_a_token=ae5fc472c3ac4a0910f1d64f4c84e313e3c62d82; xqat=ae5fc472c3ac4a0910f1d64f4c84e313e3c62d82; xq_r_token=126b64f24abcc1b2d0b168de6cfeecdd2220d891; xq_id_token=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1aWQiOi0xLCJpc3MiOiJ1YyIsImV4cCI6MTY2OTU5NDUxMywiY3RtIjoxNjY3MDMxOTMyMzA1LCJjaWQiOiJkOWQwbjRBWnVwIn0.l2yB4lVfvFhGZxJ4GZWyV5G_isY2dP1geDeLK8eqP4SVoWXAZKtJ5_-Z_pRiA_Hg_YJk8efFbcXoeURaNh5a4TcxYlA5MNEYPdS1HX9Fxhx4wTfcgFwiTodgoOLYKAxlvaEDQBOGQrztQ4efCQi9qCpWzOMyp8GLmcTaJmJBnd3WURrYNdKSLnnaADYoiTLVuNN7c3_UtXvOWM5PryhdwEkgLxXeY1Cyo7OI7ByfcgJt_24Nup3zpnvE1R3XVZQAihQHAh25e76iGlIWq1_bA-sWQCTMdOCMy1xSHLjuaNGZdBkhvpEYlB3rEDjxL16NoiuLwTIPXfBWQkMCaRwbbQ; u=611667031990425; Hm_lpvt_1db88642e346389874251b5a1eded6e3=1667031994");
+            .addHeader("user-agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36");
+//            .addHeader("cookie", "device_id=0667a293ccc5e4278186e6537c064958; s=dc1548rf55; Hm_lvt_1db88642e346389874251b5a1eded6e3=1664696087,1666422891; xq_a_token=ae5fc472c3ac4a0910f1d64f4c84e313e3c62d82; xqat=ae5fc472c3ac4a0910f1d64f4c84e313e3c62d82; xq_r_token=126b64f24abcc1b2d0b168de6cfeecdd2220d891; xq_id_token=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1aWQiOi0xLCJpc3MiOiJ1YyIsImV4cCI6MTY2OTU5NDUxMywiY3RtIjoxNjY3MDMxOTMyMzA1LCJjaWQiOiJkOWQwbjRBWnVwIn0.l2yB4lVfvFhGZxJ4GZWyV5G_isY2dP1geDeLK8eqP4SVoWXAZKtJ5_-Z_pRiA_Hg_YJk8efFbcXoeURaNh5a4TcxYlA5MNEYPdS1HX9Fxhx4wTfcgFwiTodgoOLYKAxlvaEDQBOGQrztQ4efCQi9qCpWzOMyp8GLmcTaJmJBnd3WURrYNdKSLnnaADYoiTLVuNN7c3_UtXvOWM5PryhdwEkgLxXeY1Cyo7OI7ByfcgJt_24Nup3zpnvE1R3XVZQAihQHAh25e76iGlIWq1_bA-sWQCTMdOCMy1xSHLjuaNGZdBkhvpEYlB3rEDjxL16NoiuLwTIPXfBWQkMCaRwbbQ; u=611667031990425; Hm_lpvt_1db88642e346389874251b5a1eded6e3=1667031994");
 
     @Override
     public void process(Page page) {
+
+        String url = page.getUrl().toString();
+        if (url.equals("https://xueqiu.com/")) {
+            page.setSkip(true);
+            return;
+        }
+
         String raw = page.getRawText();
         List<Map<String, Object>> infos = new ArrayList<>();
         JSONObject rawJsonObj = JSON.parseObject(raw);
@@ -74,5 +80,15 @@ public class XueQiuKinePageProcess implements PageProcessor {
     @Override
     public Site getSite() {
         return site;
+    }
+
+
+    public static void main(String[] args) {
+
+        Spider spider = Spider.create(new XueQiuKinePageProcess());
+        spider.get("https://xueqiu.com/");
+        ResultItems resultItems = spider.get("https://stock.xueqiu.com/v5/stock/chart/kline.json?symbol=SZ300281&begin=1668323841775&period=day&type=before&count=-30&indicator=kline,pe,pb,ps,pcf,market_capital,agt,ggt,balance");
+        log.info("resultItems:{}", resultItems);
+
     }
 }

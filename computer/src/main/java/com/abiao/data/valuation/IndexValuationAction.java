@@ -4,6 +4,7 @@ import com.abiao.data.model.*;
 import com.alibaba.fastjson.JSON;
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
+
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.time.DateUtils;
@@ -16,6 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -80,6 +82,7 @@ public class IndexValuationAction {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         Date currentTradeDate = df.parse(currentTradeDateStr);
         Date indexEarliestDate = df.parse(indexEarliestDateStr);
+        //确定从哪个时间点开始
         currentTradeDate = currentTradeDate.before(indexEarliestDate) ? indexEarliestDate : currentTradeDate;
         Date latestTradeDate = df.parse(latestDateStr);
         latestTradeDate = DateUtils.addDays(latestTradeDate, 1);
@@ -89,14 +92,21 @@ public class IndexValuationAction {
             String formatDate = df.format(currentTradeDate);
             List<String> indexContentCodes = getStockCodes(formatDate);
             List<StockIndicator> stockIndicators = stockIndicatorDao.selectByStockCodesAndDate(indexContentCodes, formatDate);
-            if (stockIndicators.size() > 0) {
-                IndexValuation indexValuation = valuationComputer.compute(stockIndicators);
-                indexValuation.setIndexCode(indexCode);
-                indexValuation.setTradeDate(formatDate);
-                indexValuations.add(indexValuation);
-                log.info("computer index valuation, indexCode:{}, date:{}, indexContentSize:{}, stockIndicatorSize:{}, valuation:{},",
-                        indexCode, formatDate, indexContentCodes.size(), stockIndicators.size(), indexValuation);
+
+            //需要所有的stock indicator,如果没有准备好，后面时间的就没必要跑了。
+            if (indexContentCodes.size() != stockIndicators.size()) {
+                Set<String> stockIndicatorCode = stockIndicators.stream().map(StockIndicator::getStockCode).collect(Collectors.toSet());
+                List<String> diff = indexContentCodes.stream().filter(item -> !stockIndicatorCode.contains(item)).collect(Collectors.toList());
+                log.error("diff stock code:{}", diff);
+                break;
             }
+
+            IndexValuation indexValuation = valuationComputer.compute(stockIndicators);
+            indexValuation.setIndexCode(indexCode);
+            indexValuation.setTradeDate(formatDate);
+            indexValuations.add(indexValuation);
+            log.info("computer index valuation, indexCode:{}, date:{}, indexContentSize:{}, stockIndicatorSize:{}, valuation:{},",
+                    indexCode, formatDate, indexContentCodes.size(), stockIndicators.size(), indexValuation);
 
             currentTradeDate = DateUtils.addDays(currentTradeDate, 1);
         }
@@ -129,7 +139,6 @@ public class IndexValuationAction {
         ValuationComputer computer = new PEWEValuationComputer();
 
         List<FollowIndex> followIndices = followIndexDao.selectAll();
-
         for (FollowIndex followIndex : followIndices) {
             IndexValuationAction indexValuationAction = new IndexValuationAction(followIndex.getIndexCode(),
                     listedCompanyDao, stockIndicatorDao, indexValuationDao,indexContentDao, computer);

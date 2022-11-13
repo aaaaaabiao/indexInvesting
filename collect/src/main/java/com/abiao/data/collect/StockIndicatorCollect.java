@@ -1,6 +1,4 @@
 package com.abiao.data.collect;
-
-import com.abiao.data.collect.spider.XueQiuKinePageProcess;
 import com.abiao.data.constant.AKDict;
 import com.abiao.data.model.StockIndicator;
 import com.abiao.data.util.AKUtil;
